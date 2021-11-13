@@ -32,6 +32,8 @@ public class EbobEkok {
                     System.out.println("ortak bolen\t:"+i);
                     ebob = i;
                 }
+            }else {
+                break;
             }
         }
 
