@@ -9,6 +9,7 @@ public class TersPiramit {
         int spaceCount = 0;
 
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Bir sayi giriniz\t:");
         loopCount = scanner.nextInt();
 
         //bir dongu ile yildiz sayisini ayarlayalim.
