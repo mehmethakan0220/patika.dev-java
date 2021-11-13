@@ -26,6 +26,7 @@ public class Manavinki {
         tutar += kiloPatlican * scanner.nextDouble();
 
         System.out.println("Almis olduklarinizin tutari \t:"+tutar);
+
     }
 
 }
