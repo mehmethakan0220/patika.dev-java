@@ -24,6 +24,7 @@ public class Polindrom {
         }
     }
 
+    //Girilen sayiyi tersten yazan fonksiyon! 4567 => 7654
     public static int numberReverser(int number){
         int numLenght = digitCounter(number);
         if(numLenght==1){
@@ -32,6 +33,7 @@ public class Polindrom {
         return (int) ((number%10)*Math.pow(10,numLenght-1) +numberReverser(number/10));
     }
 
+    //Girilen sayinin kac basamakli oldugunu bulan fonksiyon.
     public  static  int digitCounter(int number){
         int counter = 0;
         while(number !=0){
