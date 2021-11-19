@@ -65,7 +65,7 @@ public class Fighter {
         if(isBlance()){
             return  (int) damage;
         }else{
-            return  (int) damage - getRandom010()+base;
+            return  (int) damage - (getRandom010()+base);
         }
     }
     public int aparkat(){
@@ -81,7 +81,7 @@ public class Fighter {
         if(isBlance()){
             return  (int) damage;
         }else{
-            return  (int) damage - getRandom010()+base;
+            return  (int) damage - (getRandom010()+base);
         }
 
     }
@@ -99,7 +99,7 @@ public class Fighter {
         if(isBlance()){
             return  (int) damage;
         }else{
-            return  (int) (damage - getRandom010()+base);
+            return  (int) (damage - (getRandom010()+base));
         }
     }
 
