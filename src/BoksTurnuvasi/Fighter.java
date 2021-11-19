@@ -18,7 +18,7 @@ public class Fighter {
         scanner = new Scanner(System.in);
         setName();
         setWeight();
-        this.health=1000;
+        this.health=500;
         this.morale=health/10;
     }
 
@@ -28,17 +28,14 @@ public class Fighter {
         if(rate>0.66){
             int attack = direk();
             System.out.println(this.getName()+" Direk  hasarı:"+attack);
-            showStatus();
             return attack;
         }else if(rate>0.33){
             int attack = krose();
             System.out.println(this.getName()+" Krose  hasarı:"+attack);
-            showStatus();
             return attack;
         }else{
             int attack = aparkat();
             System.out.println(this.getName()+" Aparkat  hasarı:"+attack);
-            showStatus();
             return attack;
         }
     }
@@ -46,6 +43,7 @@ public class Fighter {
     private void prepareDefance(){
         setBlance();
         setGuard();
+        setDistance();
     }
     private void prepareAttack(){
         setDistance();
@@ -55,7 +53,7 @@ public class Fighter {
     public int direk(){
         prepareAttack();
         if(!distance){
-            System.out.println(this.getName()+"Direk Saldirisi boşa gitti.");
+            System.out.println(this.getName()+" Direk Saldirisi boşa gitti.");
             setMorale(getMorale()-1);
             return 0;
         }
@@ -65,13 +63,13 @@ public class Fighter {
         if(isBlance()){
             return  (int) damage;
         }else{
-            return  (int) damage - (getRandom010()+base);
+            return  (int) damage - base;
         }
     }
     public int aparkat(){
         prepareAttack();
         if(!distance){
-            System.out.println(this.getName()+"Aparkat Saldirisi boşa gitti.");
+            System.out.println(this.getName()+" Aparkat Saldirisi boşa gitti.");
             setMorale(getMorale()-1);
             return 0;
         }
@@ -81,7 +79,7 @@ public class Fighter {
         if(isBlance()){
             return  (int) damage;
         }else{
-            return  (int) damage - (getRandom010()+base);
+            return  (int) (damage - base);
         }
 
     }
@@ -99,62 +97,54 @@ public class Fighter {
         if(isBlance()){
             return  (int) damage;
         }else{
-            return  (int) (damage - (getRandom010()+base));
+            return  (int) (damage - base);
         }
     }
 
     public boolean block(int attack){
 
         prepareDefance();
-        if(attack==0){
+        if(attack<=0){
             return true;
         }
-        System.out.println("Gelen Hasar:"+attack);
         if(attack>getHealth()){
             setHealth(0);
-            System.out.println("Mac Bitti");
-            System.out.println(this.getName()+" Yenildi!");
             return false;//game over. Fighter done..
         }
-
-        if(isBlance() && isGuard()){
-            System.out.println(getName()+" hasarı %50 azalttı. hasar:"+(attack-(attack/2)));
-            attack = attack /2;
+        if(isBlance() && isGuard() && isDistance()){
+            System.out.println(getName()+" hasarı %75 azalttı. hasar:"+(attack-(attack*75/100)));
+            attack = (attack-(attack*75/100));
+            setHealth(getHealth()-attack);
+        }
+        else if(isBlance() && isGuard()){
+            System.out.println(getName()+" hasarı %50 azalttı. hasar:"+(attack-(attack*50/100)));
+            attack = (attack-(attack*50/100));
             setHealth(getHealth()-attack);
         }else if (isBlance() || isGuard()){
-            System.out.println(getName()+" hasarı %25 azalttı. hasar:"+(attack-(attack/4)));
-            attack = attack/4;
+            System.out.println(getName()+" hasarı %25 azalttı. deger:"+(attack*25/100));
+            System.out.println(getName()+" alınan hasar:"+(attack-(attack*25/100)));
+            attack = (attack-(attack*25/100));
             setHealth(getHealth()-attack);
         }else{
-            setMorale(getMorale()-1);
+            setMorale(getMorale()-(getMorale()/10));
             System.out.println(getName()+" tüm hasarı yedi. hasar:"+attack);
             setHealth(getHealth()-attack);
         }
-        showStatus();
+
         return true;
     }
 
-    private void showStatus() {
-        System.out.println("+++++++++++++++++++++++++");
-        System.out.println(getName()+"'in durumu");
-        System.out.println("Denge\t:" + isBlance());
-        System.out.println("Gard\t:"+isGuard());
-        System.out.println("Mesafe\t:" + isDistance());
-        System.out.println("Ivme\t:"+getAcceleration());
-        System.out.println("Moral\t:" + getMorale());
-        System.out.println("Healt\t:"+getHealth());
-        System.out.println("+++++++++++++++++++++++++");
-    }
+
 
     private void showHealt() {
         System.out.println("Saglik :"+this.getName()+"="+getHealth());
     }
 
     private boolean evasion(){
-        if(getMorale()>5){
+        if(getRandom010()>getRandom010() && getRandom010()<getRandom010()){
             if(getRandom010()>7){
                 System.out.println(this.getName()+" saldırıdan sakıniyor.");
-                setMorale(getMorale()+1);
+                setMorale(getMorale()+3);
                 return true;
             }
         }
@@ -162,7 +152,7 @@ public class Fighter {
     }
 
     public int getRandom010(){
-        return (int) ((Math.random() * 10)+1);
+        return (int) ((Math.random() * 10));
     }
 
     public String getName() {
